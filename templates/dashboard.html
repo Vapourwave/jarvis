@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; max-width: 900px; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+    button { margin-right: 0.5rem; margin-top: 0.25rem; }
+    pre { background: #f6f8fa; padding: 1rem; border-radius: 6px; overflow: auto; }
+    .muted { color: #555; }
+  </style>
+</head>
+<body>
+  <h1>Privacy Dashboard</h1>
+
+  <div class="card">
+    <h2>Safe Mode</h2>
+    <p class="muted">When enabled, destructive actions are blocked and only informational/open-app tasks are allowed.</p>
+    <button onclick="toggleSafeMode(true)">Enable Safe Mode</button>
+    <button onclick="toggleSafeMode(false)">Disable Safe Mode</button>
+  </div>
+
+  <div class="card">
+    <h2>What data is stored</h2>
+    <button onclick="loadSummary()">Refresh Data Summary</button>
+    <pre id="summary">Loading...</pre>
+  </div>
+
+  <div class="card">
+    <h2>Quick privacy actions</h2>
+    <button onclick="clearHistory()">Clear History</button>
+    <button onclick="revokePermissions()">Revoke microphone/location</button>
+  </div>
+
+  <script>
+    async function loadSummary() {
+      const res = await fetch('/api/privacy/data-summary');
+      const data = await res.json();
+      document.getElementById('summary').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function toggleSafeMode(enabled) {
+      await fetch('/api/safe-mode', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({enabled}),
+      });
+      await loadSummary();
+    }
+
+    async function clearHistory() {
+      await fetch('/api/privacy/clear-history', { method: 'POST' });
+      await loadSummary();
+    }
+
+    async function revokePermissions() {
+      await fetch('/api/privacy/revoke-permissions', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ permissions: ['microphone', 'location'] }),
+      });
+      await loadSummary();
+    }
+
+    loadSummary();
+  </script>
+</body>
+</html>

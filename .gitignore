@@ -1,0 +1,4 @@
+.log.key
+secure_logs.enc
+__pycache__/
+.pytest_cache/
