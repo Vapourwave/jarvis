@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jarvis.local/schemas/action-plan.schema.json",
+  "title": "ActionPlan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "actionType",
+    "parameters",
+    "requiresConfirmation",
+    "riskLevel"
+  ],
+  "properties": {
+    "actionType": {
+      "type": "string",
+      "enum": [
+        "OPEN_APP",
+        "CALL_CONTACT",
+        "SEND_MESSAGE",
+        "OPEN_URL",
+        "WEB_SEARCH"
+      ]
+    },
+    "parameters": {
+      "type": "object"
+    },
+    "requiresConfirmation": {
+      "type": "boolean"
+    },
+    "riskLevel": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH"]
+    }
+  }
+}
