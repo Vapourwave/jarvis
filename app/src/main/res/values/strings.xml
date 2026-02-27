@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Jarvis Assistant</string>
+    <string name="accessibility_service_description">Enables guided UI automation for approved assistant actions.</string>
+    <string name="onboarding_title">Enable assistant permissions</string>
+    <string name="onboarding_description">Jarvis requires several permissions to execute hands-free actions safely.</string>
+    <string name="grant_microphone">Grant microphone permission</string>
+    <string name="grant_accessibility">Open accessibility settings</string>
+    <string name="grant_notifications">Open notification access settings</string>
+    <string name="grant_contacts_sms">Grant contacts/SMS permissions</string>
+</resources>
